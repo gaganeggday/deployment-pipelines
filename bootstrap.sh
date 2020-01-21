@@ -63,7 +63,6 @@ oc create rolebinding demo-sa-admin-dev --clusterrole=admin --serviceaccount=cic
 oc create rolebinding demo-sa-admin-stage --clusterrole=admin --serviceaccount=cicd-environment:demo-sa --namespace=stage-environment
 oc apply -f 03-tasks
 oc apply -f 04-templatesandbindings
-oc apply -f 05-interceptor
 oc apply -f 06-ci
 oc apply -f 07-cd
 oc apply -f 08-eventlisteners
