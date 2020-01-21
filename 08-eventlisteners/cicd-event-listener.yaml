@@ -22,33 +22,17 @@ spec:
       template:
         name: dev-cd-deploy-from-master-template
     - name: stage-ci-dryrun-from-pr
-      interceptor:
-        header:
-        - name: Pullrequest-Action
-          value: opened,synchronize
-        - name:  Pullrequest-Repo
-          value: GITHUB_STAGE_REPO
-        objectRef:
-          kind: Service
-          name: demo-interceptor
-          apiVersion: v1
-          namespace: cicd-environment
+      interceptors:
+        - cel:
+            filter: (headers.match("X-GitHub-Event", "opened") || headers.match("X-GitHub-Event", "synchronize")) && body.pull_request.repo.full_name == "GITHUB_STAGE_REPO"
       binding:
         name: stage-ci-dryrun-from-pr-binding
       template:
         name: stage-ci-dryrun-from-pr-template
     - name: stage-cd-deploy-from-push
-      interceptor:
-        header:
-        - name: Push-Ref
-          value: master
-        - name:  Push-Repo
-          value: GITHUB_STAGE_REPO
-        objectRef:
-          kind: Service
-          name: demo-interceptor
-          apiVersion: v1
-          namespace: cicd-environment
+      interceptors:
+        - cel:
+            filter: (headers.match("X-GitHub-Event", "push") && body.pull_request.repo.full_name == "GITHUB_STAGE_REPO" && body.pull_request.repo.full_name.startsWith("/refs/heads/master")
       binding:
         name: stage-cd-deploy-from-push-binding
       template:
