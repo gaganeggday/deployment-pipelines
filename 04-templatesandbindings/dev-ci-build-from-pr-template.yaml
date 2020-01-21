@@ -10,8 +10,6 @@ spec:
     description: the specific commit SHA.
   - name: gitrepositoryurl
     description: The git repository url
-  - name: shortsha
-    description: A shortened version of the SHA for the commit to deploy
   - name: fullname
     description: The GitHub repository for this PullRequest.
   resourcetemplates:
@@ -42,4 +40,4 @@ spec:
             type: image
             params:
               - name: url
-                value: REPLACE_IMAGE:$(params.gitref)-$(params.shortsha)
+                value: REPLACE_IMAGE:$(params.gitref)-$(params.gitsha)

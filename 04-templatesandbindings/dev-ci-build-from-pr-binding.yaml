@@ -12,5 +12,3 @@ spec:
     value: $(body.repository.clone_url)
   - name: fullname
     value: $(body.repository.full_name)
-  - name: shortsha
-    value: $(body.intercepted.short_sha)
