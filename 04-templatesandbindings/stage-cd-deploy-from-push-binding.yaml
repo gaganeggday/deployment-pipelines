@@ -5,7 +5,7 @@ metadata:
 spec:
   params:
   - name: gitref
-    value: $(body.intercepted.ref)
+    value: $(body.ref)
   - name: gitsha
     value: $(body.commits.0.id)
   - name: gitrepositoryurl
