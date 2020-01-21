@@ -9,31 +9,31 @@ spec:
       interceptors:
         - cel:
             filter: (headers.match("X-GitHub-Event", "opened") || headers.match("X-GitHub-Event", "synchronize")) && body.pull_request.repo.full_name == "GITHUB_REPO"
-      binding:
-        name: dev-ci-build-from-pr-binding
+      bindings:
+        - name: dev-ci-build-from-pr-binding
       template:
         name: dev-ci-build-from-pr-template
     - name: dev-cd-deploy-from-master
       interceptors:
         - cel:
             filter: (headers.match("X-GitHub-Event", "push") && body.pull_request.repo.full_name == "GITHUB_REPO" && body.pull_request.repo.full_name.startsWith("/refs/heads/master")
-      binding:
-        name: dev-cd-deploy-from-master-binding
+      bindings:
+        - name: dev-cd-deploy-from-master-binding
       template:
         name: dev-cd-deploy-from-master-template
     - name: stage-ci-dryrun-from-pr
       interceptors:
         - cel:
             filter: (headers.match("X-GitHub-Event", "opened") || headers.match("X-GitHub-Event", "synchronize")) && body.pull_request.repo.full_name == "GITHUB_STAGE_REPO"
-      binding:
-        name: stage-ci-dryrun-from-pr-binding
+      bindings:
+        - name: stage-ci-dryrun-from-pr-binding
       template:
-        name: stage-ci-dryrun-from-pr-template
+        - name: stage-ci-dryrun-from-pr-template
     - name: stage-cd-deploy-from-push
       interceptors:
         - cel:
             filter: (headers.match("X-GitHub-Event", "push") && body.pull_request.repo.full_name == "GITHUB_STAGE_REPO" && body.pull_request.repo.full_name.startsWith("/refs/heads/master")
-      binding:
-        name: stage-cd-deploy-from-push-binding
+      bindings:
+        - name: stage-cd-deploy-from-push-binding
       template:
         name: stage-cd-deploy-from-push-template
