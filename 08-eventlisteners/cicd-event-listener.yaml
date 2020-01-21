@@ -14,17 +14,9 @@ spec:
       template:
         name: dev-ci-build-from-pr-template
     - name: dev-cd-deploy-from-master
-      interceptor:
-        header:
-        - name: Push-Ref
-          value: master
-        - name:  Push-Repo
-          value: GITHUB_REPO
-        objectRef:
-          kind: Service
-          name: demo-interceptor
-          apiVersion: v1
-          namespace: cicd-environment
+      interceptors:
+        - cel:
+            filter: (headers.match("X-GitHub-Event", "push") && body.pull_request.repo.full_name == "GITHUB_REPO" && body.pull_request.repo.full_name.startsWith("/refs/heads/master")
       binding:
         name: dev-cd-deploy-from-master-binding
       template:

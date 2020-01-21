@@ -5,8 +5,6 @@ metadata:
 spec:
   params:
   - name: gitref
-    value: $(body.intercepted.ref)
-  - name: shortsha
-    value: $(body.intercepted.short_sha)
+    value: $(body.head_commit.id)
   - name: gitrepositoryurl
     value: $(body.repository.clone_url)
